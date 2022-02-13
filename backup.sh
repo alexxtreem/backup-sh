@@ -3,6 +3,7 @@
 #
 #Set variables
 startTime=$(date +%Y-%m-%d_%H-%M-%S)
+#Path to S3 folder
 cloudStorage=/mnt/s3selectl
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
