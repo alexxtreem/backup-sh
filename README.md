@@ -1,2 +1,3 @@
 #This is a new script for backup some folders on the server.
-#It us S3 storage for sore back up.
+#It use S3 storage for store backup.
+#
