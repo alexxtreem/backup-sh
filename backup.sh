@@ -19,9 +19,11 @@ then
 	rm $dirname.tar.gz
 fi
 
-rsync -azvP $backUpdir/$dirname.tar.gz.enc $coudStorage/$dirname.tar.gz.enc
-
-if [ -f $cloudStorage/$dirname.tar.gz.enc ]
+if rsync -avzP $dirname.tar.gz.enc $coudStorage
 then
-	rm $backUpdir/$dirname.tar.gz.enc
+	rm $dirname.tar.gz.enc
+else
+	echo 'Rsync return error'
 fi
+endTime=$(date +%Y-%m-%d_%H-%M-%S)
+echo "Backup is finished at $endTime for $HOSTNAME"
