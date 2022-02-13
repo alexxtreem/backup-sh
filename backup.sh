@@ -4,7 +4,7 @@
 #Set variables
 startTime=$(date +%Y-%m-%d_%H-%M-%S)
 #Path to S3 folder
-cloudStorage=/mnt/s3selectl
+cloudStorage=/mnt/s3selectel
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
@@ -18,12 +18,10 @@ if [ -f $dirname.tar.gz.enc ]
 then
 	rm $dirname.tar.gz
 fi
+#Change location to cloud storage
+cd $cloudStorage
+pwd
+rsync -avz --delete $backUpdir/$dirname.tar.gz.enc $coudStorage/
 
-if rsync -avzP $dirname.tar.gz.enc $coudStorage
-then
-	rm $dirname.tar.gz.enc
-else
-	echo 'Rsync return error'
-fi
 endTime=$(date +%Y-%m-%d_%H-%M-%S)
 echo "Backup is finished at $endTime for $HOSTNAME"
