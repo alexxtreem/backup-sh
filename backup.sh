@@ -9,20 +9,29 @@ cloudStorage=/mnt/s3selectel
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
 #
+echo "### * ### * ###"
 cd $backUpdir
 echo "Backup is started at $startTime for $HOSTNAME"
+echo "### * ### * ###"
 dirname=$startTime'_'$HOSTNAME
+echo "Start archiving suorce directiorie $backUpdir"
 tar -zcvPf $backUpdir/$dirname.tar.gz $sourceDir/
+
+echo "### * ### * ###"
+echo "Start encription source file"
 openssl enc -aes-256-cbc -in $backUpdir/$dirname.tar.gz -out $backUpdir/$dirname.tar.gz.enc -aes-256-cbc -a -pass file:/root/myfile
+echo "### * ### * ###"
+echo "If encription success, remove archive" 
 if [ -f $dirname.tar.gz.enc ]
 then
 	rm $dirname.tar.gz
 fi
 
-echo $backUpdir $cloudStorage
-#Copy backup to S3 storage.
+echo "Check dirs $backUpdir $cloudStorage"
+echo "Backup files to S3 storage."
 rsync -avz --delete $backUpdir/$dirname.tar.gz.enc $cloudStorage
-#Check coping files to S3 storage and remove source.
+
+echo "Check coping files to S3 storage and remove source."
 if [ -f $cloudStorage/$dirname.tar.gz.enc ]
 then
 	rm $backUpdir/$dirname.tar.gz.enc
