@@ -27,17 +27,21 @@ then
 	rm $dirname.tar.gz
 fi
 
+echo "### * ### * ###"
 echo "Check dirs $backUpdir $cloudStorage"
 echo "Backup files to S3 storage."
 rsync -avz --delete $backUpdir/$dirname.tar.gz.enc $cloudStorage
 
+echo "### * ### * ###"
 echo "Check coping files to S3 storage and remove source."
 if [ -f $cloudStorage/$dirname.tar.gz.enc ]
 then
 	rm $backUpdir/$dirname.tar.gz.enc
 else
+	echo "### * ### * ###"
 	echo "File $backUpdir/$dirname.tar.gz.enc dose not exist"
 fi
 
 endTime=$(date +%Y-%m-%d_%H-%M-%S)
+echo "### * ### * ###"
 echo "Backup is finished at $endTime for $HOSTNAME"
