@@ -18,10 +18,17 @@ if [ -f $dirname.tar.gz.enc ]
 then
 	rm $dirname.tar.gz
 fi
-#Change location to cloud storage
-cd $cloudStorage
-pwd
-rsync -avz --delete $backUpdir/$dirname.tar.gz.enc $coudStorage/
+
+echo $backUpdir $cloudStorage
+#Copy backup to S3 storage.
+rsync -avz --delete $backUpdir/$dirname.tar.gz.enc $cloudStorage
+#Check coping files to S3 storage and remove source.
+if [ -f $cloudStorage/$dirname.tar.gz.enc ]
+then
+	rm $backUpdir/$dirname.tar.gz.enc
+else
+	echo "File $backUpdir/$dirname.tar.gz.enc dose not exist"
+fi
 
 endTime=$(date +%Y-%m-%d_%H-%M-%S)
 echo "Backup is finished at $endTime for $HOSTNAME"
