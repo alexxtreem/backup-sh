@@ -8,6 +8,7 @@ cloudStorage=/mnt/s3selectel
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
+#Do not forget to set password for encryption to /root/myfile
 #
 echo "### * ### * ###"
 cd $backUpdir
