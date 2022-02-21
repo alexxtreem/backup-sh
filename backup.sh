@@ -8,7 +8,15 @@ cloudStorage=/mnt/s3selectel
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
-#
+daysToStore=1 
+#Check for dir parameters.
+if [ $# -ge 2 ]; then
+	echo 'Start backup'
+else
+	echo 'Not enough parameters'
+	exit 1
+fi
+#Start program.
 echo "### * ### * ###"
 cd $backUpdir
 echo "Backup is started at $startTime for $HOSTNAME"
@@ -41,6 +49,11 @@ else
 	echo "### * ### * ###"
 	echo "File $backUpdir/$dirname.tar.gz.enc dose not exist"
 fi
+
+#Remove old backup archives
+fileName=`echo $HOSTNAME | awk -F '.' '{print $1}'`
+echo $fileName 'This is host sign for rm files' 
+#find $cloudStorage -mtime +$daysToStore -regextype posix-egrep -regex .*(\$fileName).*$  | xargs -r rm
 
 endTime=$(date +%Y-%m-%d_%H-%M-%S)
 echo "### * ### * ###"
