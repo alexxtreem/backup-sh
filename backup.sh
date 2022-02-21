@@ -16,6 +16,8 @@ else
 	echo 'Not enough parameters'
 	exit 1
 fi
+#Do not forget to set password for encryption to /root/myfile
+#
 #Start program.
 echo "### * ### * ###"
 cd $backUpdir
