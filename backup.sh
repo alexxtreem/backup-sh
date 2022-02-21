@@ -8,7 +8,7 @@ cloudStorage=/mnt/s3selectel
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
-daysToStore=1 
+daysToStore=2 
 #Check for dir parameters.
 if [ $# -ge 2 ]; then
 	echo 'Start backup'
@@ -54,8 +54,9 @@ fi
 
 #Remove old backup archives
 fileName=`echo $HOSTNAME | awk -F '.' '{print $1}'`
-echo $fileName 'This is host sign for rm files' 
-#find $cloudStorage -mtime +$daysToStore -regextype posix-egrep -regex .*(\$fileName).*$  | xargs -r rm
+echo "### * ### * ###"
+echo "Remove older then $daysToStore days files from $cloudeStorage for host $HOSTNAME"
+find $cloudStorage/ -mtime +$daysToStore -regextype posix-egrep -regex '.*('$fileName').*$'  | xargs -r rm
 
 endTime=$(date +%Y-%m-%d_%H-%M-%S)
 echo "### * ### * ###"
