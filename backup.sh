@@ -4,7 +4,7 @@
 #Set variables
 startTime=$(date +%Y-%m-%d_%H-%M-%S)
 #Path to S3 folder
-cloudStorage=/mnt/s3selectel
+source /home/alex/backup-sh/vars
 #Add backup dir, and dir where we are would place our backup files
 sourceDir=$(echo $1 | sed 's/\/\+$//')
 backUpdir=$(echo $2 | sed 's/\/\+$//')
