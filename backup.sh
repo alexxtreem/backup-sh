@@ -29,7 +29,7 @@ tar -zcvPf $backUpdir/$dirname.tar.gz $sourceDir/
 
 echo "### * ### * ###"
 echo "Start encription source file"
-openssl enc -aes-256-cbc -in $backUpdir/$dirname.tar.gz -out $backUpdir/$dirname.tar.gz.enc -aes-256-cbc -a -pass file:/root/myfile
+openssl enc -aes-256-cbc -in $backUpdir/$dirname.tar.gz -out $backUpdir/$dirname.tar.gz.enc -aes-256-cbc -a -pass file:$passLocation
 echo "### * ### * ###"
 echo "If encription success, remove archive" 
 if [ -f $dirname.tar.gz.enc ]
